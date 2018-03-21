@@ -19,7 +19,7 @@ function DklBaseGraphics:new(w,h)
    setmetatable(d, self)
    self.__index = self
    self.dev = {size={w,h},cra={10.8,14.4},cin={0.15,0.20},csi=0.166, 
-		cxy={0.02604167,0.03875969},din={0,0},res=96
+		cxy={0.02604167,0.03875969},din={0,0},res=96,init=true
 	}
 	self.dev.din = {w/self.dev.res,h/self.dev.res}
    self.def = {
@@ -31,12 +31,12 @@ function DklBaseGraphics:new(w,h)
 		pch=2,srt=0, tck=0.03, tcl=-0.5, tmag=0, type=0, xaxp={0,1,5}, 
 		xaxs="r", xaxt="s", xpd=false, yaxp={0,1,5},yaxs="r", yaxt="s"
 	}
-	self.fig = {ask=false, family="", fin={7,7}, lend="round", 
+	self.fig = {ask=false, family="", fin=nil, lend="round", 
 		lheight=1, ljoin = "round", lmitre = 10, mai={0.5,0.5,0.5,0.5},
-		mar={5.1,4.1,4.1,2.1}, mex=1,mfcol={1,1}, mfg={1,1,1,1}, 
+		mar={5.1,4.1,4.1,2.1}, mex=1, mfcol={1,1}, mfg={1,1,1,1}, 
 		mfrow={1,1}, new=false, oma={0,0,0,0}, omd={0,1,0,1}, 
-		omi={0,0,0,0},pin={5.76,5.16}, ps=12, pty="m", usr={0,1,0,1}, 
-		xlog=false, ylog=false}
+		omi={0,0,0,0},pin=nil, ps=12, pty="m", usr={0,1,0,1}, 
+		xlog=false, ylog=false, col=-1, row=0}
 	self.plt = {}
 	self:resize()
 	self:make_symbols()
@@ -66,7 +66,14 @@ end
 
 function DklBaseGraphics:plot_new()
 	self.plt = tableCopy(self.def)
-	if (self.fig.col < self.fig.mfrow[1]-1) then
+	if (self.dev.init) then 
+		self.dev.init=false
+		self:resize()
+	end
+	if (self.fig.mfrow[1]==1 and self.fig.mfrow[2]==1) then
+		self.fig.col = 0
+		self.fig.row = 0
+	elseif (self.fig.col < self.fig.mfrow[1]-1) then
 		self.fig.col = self.fig.col + 1
 	else
 		self.fig.col = 0
@@ -168,6 +175,7 @@ function DklBaseGraphics:box(args)
 	translate(self.fig.xoff,self.fig.yoff)
 	stroke(0)
 	noFill()
+	rectMode(CORNER)
 	if (which=="plot") then
 		translate(self.fig.mai[1]*self.dev.res,self.fig.mai[2]*self.dev.res)
 		rect(0,0,self.fig.pin[1]*self.dev.res,self.fig.pin[2]*self.dev.res)
