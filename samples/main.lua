@@ -18,7 +18,7 @@ local col
 
 function setup()
 	size(500,350)
-	local f = loadFont("data/Vera.ttf",11)
+	local f = loadFont("data/Karla.ttf",11)
 	textFont(f)
 	bg = DklBaseGraphics:new(width(),height())
 	x = {10,40,20,70,50}
@@ -32,14 +32,14 @@ function draw()
 	bg:par({mfrow={2,2}})
 	bg:plot(x,x,{type="p",col=col,bty="n",main="PLOT 1",sub="subplot 1",xlab="X axis",ylab="Y axis"})
 	bg:identify(x,x,{labels=x})
---	bg:box({which="figure"})
-	bg:text(x,x,x)
+	bg:box({which="figure"})
 	bg:plot(y,y,{type="p",bty="n",main="PLOT 2",sub="subplot 2",xlab="X axis",ylab="Y axis"})
---	bg:box({which="figure"})
+	bg:text(y,y,y)
+	bg:box({which="figure"})
 	bg:plot(x,y,{type="l",col=col,bty="n",main="PLOT 3",sub="subplot 3",xlab="X axis",ylab="Y axis"})
---	bg:box({which="figure"})
+	bg:box({which="figure"})
 	bg:plot(y,x,{type="l",col=col,bty="n",main="PLOT 4",sub="subplot 4",xlab="X axis",ylab="Y axis"})
---	bg:box({which="figure"})
+	bg:box({which="figure"})
 end
 
 function windowResized(w,h)
