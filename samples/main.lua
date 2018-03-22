@@ -18,7 +18,7 @@ local col
 
 function setup()
 	size(500,350)
-	local f = loadFont("data/Karla.ttf",11)
+	local f = loadFont("data/Karla.ttf",12)
 	textFont(f)
 	bg = DklBaseGraphics:new(width(),height())
 	x = {10,40,20,70,50}

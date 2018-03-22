@@ -149,13 +149,12 @@ function DklBaseGraphics:text(x,y,labels,args)
 	popMatrix()
 end
 
-
 function DklBaseGraphics:identify(x,y,args)
 	args = args or {}
 	
 	local tlrnc = args.tolerance or 0.1
 	local offset = args.offset or 1
-	local labels = args.labels or x
+	local labels = args.labels or nil
 	offset = offset * self.dev.cra[1]
 	
 	event(PRESSED)
@@ -170,9 +169,15 @@ function DklBaseGraphics:identify(x,y,args)
 		evt = rect(x[i]*self.plt.xscl,-y[i]*self.plt.yscl,
 				tlrnc*self.dev.res,tlrnc*self.dev.res)
 		if (evt) then
+			table.insert(self.fig.selection,i)
+		end
+	end
+	if (labels) then
+		for j,i in pairs(self.fig.selection) do
 			text(labels[i],x[i]*self.plt.xscl+offset,-y[i]*self.plt.yscl-offset)
 		end
 	end
 	popMatrix()
 	noEvent()
+	return self.fig.selection
 end

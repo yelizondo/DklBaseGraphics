@@ -36,7 +36,7 @@ function DklBaseGraphics:new(w,h)
 		mar={5.1,4.1,4.1,2.1}, mex=1, mfcol={1,1}, mfg={1,1,1,1}, 
 		mfrow={1,1}, new=false, oma={0,0,0,0}, omd={0,1,0,1}, 
 		omi={0,0,0,0},pin=nil, ps=12, pty="m", usr={0,1,0,1}, 
-		xlog=false, ylog=false, col=-1, row=0}
+		xlog=false, ylog=false, col=-1, row=0, selection = {}}
 	self.plt = {}
 	self:resize()
 	self:make_symbols()
@@ -137,6 +137,9 @@ function DklBaseGraphics:resize_window(w,h)
    self:resize()
 end
 
+function DklBaseGraphics:mtext(text,args)
+end
+
 function DklBaseGraphics:title(args)
 	args = args or {}
 	local main = args.main
@@ -183,6 +186,12 @@ function DklBaseGraphics:box(args)
 		rect(0,0,self.fig.fin[1]*self.dev.res,self.fig.fin[2]*self.dev.res)
 	end
 	popMatrix()
+end
+
+function DklBaseGraphics:rect(xleft,ybottom,xright,ytop,args)
+end
+
+function DklBaseGraphics:segments(x0,y0,x1,y1,args)
 end
 
 function DklBaseGraphics:par(args)
